@@ -1,0 +1,21 @@
+.env
+.env.*
+!.env.example
+
+.chromadb/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+.venv-rag/
+node_modules/
+.vscode/
+
+
+/Do not publish to git.docx
+/invoice_check.pdf
+/business_docs/*
+!/business_docs/README.md

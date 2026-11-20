@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+pymysql
+python-jose
+passlib[bcrypt]
+reportlab
+langchain-chroma
+langchain-google-genai
+langchain-text-splitters
+pypdf
+python-multipart

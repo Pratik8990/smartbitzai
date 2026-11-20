@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartBiz AI – Business Operations & AI Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="app-container">
+
+        <!-- ================= SIDEBAR NAVIGATION ================= -->
+        <aside id="main-sidebar" class="sidebar">
+            <div>
+                <div class="brand-section">
+                    <button type="button" class="brand-logo" id="brandSettingsButton"
+                        aria-label="Open SmartBiz settings" aria-haspopup="dialog" aria-controls="settingsModal"
+                        onclick="openSettingsModal()">
+                        <div class="logo-badge" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M17.2 7.4c-.9-1.3-2.4-2-4.6-2-3 0-5 1.25-5 3.2 0 1.8 1.6 2.45 4.3 2.95l1.6.3c2.5.5 3.8 1.15 3.8 2.9 0 1.9-2 3.25-5 3.25-2.2 0-4-.7-5.1-1.9"></path>
+                                <circle cx="17.2" cy="7.4" r="1.15" fill="#b9ece1" stroke="none"></circle>
+                                <circle cx="7.2" cy="18.1" r="1.15" fill="#b9ece1" stroke="none"></circle>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="brand-title">SmartBiz<span>.AI</span></div>
+                            <span class="brand-sub">Business Intelligence Hub</span>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="role-badge">
+                    <div class="role-badge-header">
+                        <span class="role-badge-main">
+                            <span class="status-dot is-guest" id="workspaceStatusDot"></span>
+                            <span class="role-badge-label">Workspace access</span>
+                        </span>
+                        <span class="role-tag is-guest" id="workspaceAccessTag">LOCKED</span>
+                    </div>
+                    <div class="role-badge-status">
+                        <strong id="workspaceAccessStatus">Sign in to unlock</strong>
+                    </div>
+                </div>
+
+                <ul class="sidebar-menu">
+                    <li>
+                        <button class="nav-btn active" onclick="navigateTab('dashboard', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <rect x="3.5" y="3.5" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="13.5" y="3.5" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="3.5" y="13.5" width="7" height="7" rx="1.5"></rect>
+                                    <rect x="13.5" y="13.5" width="7" height="7" rx="1.5"></rect>
+                                </svg>
+                                <span>Dashboard</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-btn" onclick="navigateTab('customers', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <circle cx="9" cy="8" r="3"></circle>
+                                    <path d="M3.5 19v-1.2A4.8 4.8 0 0 1 8.3 13h1.4a4.8 4.8 0 0 1 4.8 4.8V19"></path>
+                                    <path d="M16 5.2a3 3 0 0 1 0 5.6M17 13.2a4.8 4.8 0 0 1 3.5 4.6V19"></path>
+                                </svg>
+                                <span>Customers CRM</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-btn" id="nav-inventory" onclick="navigateTab('inventory', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2L12 3Z"></path>
+                                    <path d="m4.3 7.4 7.7 4 7.7-4M12 11.5V21"></path>
+                                </svg>
+                                <span>Inventory &amp; Stock</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-btn" onclick="navigateTab('invoices', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20V3.5Z"></path>
+                                    <path d="M14 3.8v4h4M9 12h6M9 15.5h6"></path>
+                                </svg>
+                                <span>Invoices &amp; Billing</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-btn" id="nav-expenses" onclick="navigateTab('expenses', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                                    <path d="M3.5 9.5h17M7 14.5h3"></path>
+                                </svg>
+                                <span>Sales &amp; Expenses</span>
+                            </span>
+                        </button>
+                    </li>
+                    <li>
+                        <button class="nav-btn" onclick="navigateTab('ai-copilot', this)">
+                            <span class="nav-item-label">
+                                <svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M12 3.5 13.9 9l5.6 2-5.6 1.9-1.9 5.6-2-5.6-5.5-1.9 5.5-2 2-5.5Z"></path>
+                                    <path d="m19 15 .8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15Z"></path>
+                                </svg>
+                                <span>SmartBiz Copilot</span>
+                            </span>
+                            <span class="nav-version">AI</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-footer">
+                <button type="button" class="user-pill sidebar-account-button"
+                    onclick="toggleAuthModal()" aria-label="Business account: sign in or sign out">
+                    <span class="user-avatar">JD</span>
+                    <span>
+                        <span class="sidebar-account-title">Business account</span>
+                        <span class="sidebar-account-subtitle">Private ledger</span>
+                    </span>
+                </button>
+                <div class="sidebar-connection-label">
+                    Connected: MySQL + FastAPI Engine
+                </div>
+                <button type="button" class="sidebar-auth-control" onclick="toggleAuthModal()">
+                    <span id="authStatusText">Guest Access</span>
+                    <span class="badge badge-standard" id="authStatusBadge">SIGN IN</span>
+                </button>
+            </div>
+        </aside>
+        <button type="button" class="sidebar-backdrop" aria-label="Close navigation menu"
+            onclick="setSidebarOpen(false)"></button>
+
+        <!-- ================= MAIN VIEWPORT ================= -->
+        <main class="main-viewport">
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button type="button" class="menu-toggle" aria-label="Hide navigation menu"
+                        aria-controls="main-sidebar" aria-expanded="true" onclick="toggleSidebar()">☰</button>
+                    <div class="topbar-title" id="currentViewTitle">Dashboard Overview</div>
+                </div>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <span class="search-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <circle cx="10.8" cy="10.8" r="6.8"></circle>
+                                <path d="m16 16 4.5 4.5"></path>
+                            </svg>
+                        </span>
+                        <input type="text" id="globalSearchInput" placeholder="Quick search data..."
+                            oninput="handleGlobalSearch(this.value)">
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal('createInvoiceModal')">
+                        <span>+ New Invoice</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Workspace Container -->
+            <div class="view-container">
+
+                <!-- ================= VIEW 1: DASHBOARD ================= -->
+                <div id="view-dashboard" class="tab-view active-tab">
+                    <div class="view-intro dashboard-intro">
+                        <div class="view-intro-copy">
+                            <span class="view-eyebrow">BUSINESS OVERVIEW</span>
+                            <h1>Business overview</h1>
+                            <p>A clear view of revenue, expenses, receivables, and stock health.</p>
+                        </div>
+                        <div class="view-intro-mark" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="M4 19V5m0 14h16"></path>
+                                <path d="m7 15 4-4 3 2 5-6"></path>
+                                <path d="M16 7h3v3"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- KPI Metrics Row -->
+                    <div class="kpi-grid">
+                        <div class="card kpi-card">
+                            <span class="card-label">Gross Revenue</span>
+                            <div class="card-value" id="kpi-gross-revenue">$0.00</div>
+                            <span class="card-trend trend-neutral">Based on paid invoices</span>
+                        </div>
+                        <div class="card kpi-card">
+                            <span class="card-label">Total Expenses</span>
+                            <div class="card-value" id="kpi-total-expenses">$0.00</div>
+                            <span class="card-trend trend-neutral">Based on recorded expenses</span>
+                        </div>
+                        <div class="card kpi-card">
+                            <span class="card-label">Net Profit</span>
+                            <div class="card-value" id="kpi-net-profit" style="color: var(--primary);">$0.00</div>
+                            <span class="card-trend trend-neutral">Paid revenue less expenses</span>
+                        </div>
+                        <div class="card kpi-card">
+                            <span class="card-label">Receivables & Stock</span>
+                            <div class="card-value" style="color: #d97706;" id="kpi-receivables">$0.00</div>
+                            <span class="card-trend trend-warn" id="kpi-lowstock-alert">0 Items Critical Stock</span>
+                        </div>
+                    </div>
+
+                    <section class="operations-watchlist" aria-labelledby="dashboard-alert-title">
+                        <div class="watchlist-header">
+                            <div class="watchlist-heading">
+                                <span class="watchlist-heading-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="M12 3.5 21 20H3L12 3.5Z"></path>
+                                        <path d="M12 9v5M12 17.2v.1"></path>
+                                    </svg>
+                                </span>
+                                <div>
+                                    <h2 id="dashboard-alert-title">Operations watchlist</h2>
+                                    <p id="dashboard-alert-summary" aria-live="polite">
+                                        Loading current inventory and expense status…
+                                    </p>
+                                </div>
+                            </div>
+                            <span id="dashboard-alert-status" class="watchlist-status is-loading" role="status">
+                                Loading
+                            </span>
+                        </div>
+                        <div class="watchlist-grid">
+                            <article class="watchlist-card">
+                                <span class="watchlist-card-icon inventory-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <path d="m12 3 8 4.2v9.6L12 21l-8-4.2V7.2L12 3Z"></path>
+                                        <path d="m4.3 7.4 7.7 4 7.7-4M12 11.5V21"></path>
+                                    </svg>
+                                </span>
+                                <div class="watchlist-card-content">
+                                    <span class="watchlist-card-label">Inventory</span>
+                                    <div class="watchlist-count-line">
+                                        <strong id="dashboard-low-stock-count">—</strong>
+                                        <span>low-stock products</span>
+                                    </div>
+                                    <p>At or below their minimum stock level</p>
+                                </div>
+                                <button type="button" class="watchlist-action"
+                                    onclick="navigateTab('inventory', document.getElementById('nav-inventory'))">
+                                    Review
+                                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                                        <path d="M3 8h9M8 4l4 4-4 4"></path>
+                                    </svg>
+                                </button>
+                            </article>
+                            <article class="watchlist-card">
+                                <span class="watchlist-card-icon expense-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" focusable="false">
+                                        <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                                        <path d="M3.5 9.5h17M7 14.5h3"></path>
+                                    </svg>
+                                </span>
+                                <div class="watchlist-card-content">
+                                    <span class="watchlist-card-label">Expenses</span>
+                                    <div class="watchlist-count-line">
+                                        <strong id="dashboard-flagged-expense-count">—</strong>
+                                        <span>flagged for review</span>
+                                    </div>
+                                    <p>Recorded expenses over $1,000</p>
+                                </div>
+                                <button type="button" class="watchlist-action"
+                                    onclick="navigateTab('expenses', document.getElementById('nav-expenses'))">
+                                    Review
+                                    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                                        <path d="M3 8h9M8 4l4 4-4 4"></path>
+                                    </svg>
+                                </button>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- Charts Row -->
+                    <div class="charts-row">
+                        <!-- Line Chart: Financial Velocity -->
+                        <div class="card">
+                            <div class="chart-heading">
+                                <div>
+                                    <h4>Monthly Sales &amp; Expenses</h4>
+                                    <p>Invoice totals vs recorded
+                                        expenses from the FastAPI ledger</p>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="financialChartCanvas"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Category Doughnut/Distribution -->
+                        <div class="card">
+                            <div class="chart-heading">
+                                <div>
+                                    <h4>Expense Allocation</h4>
+                                    <p>Outflow distribution by business tags</p>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="expenseCategoryCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Invoices Summary Table -->
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <div class="table-header-title">Recent Ledger Invoices</div>
+                            <button class="btn btn-secondary btn-sm" onclick="navigateTab('invoices')">Open Full Billing
+                                Hub →</button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice #</th>
+                                    <th>Client</th>
+                                    <th>Total Amount</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-recent-invoices-body">
+                                <!-- Injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 2: CUSTOMERS CRM ================= -->
+                <div id="view-customers" class="tab-view">
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <div>
+                                <div class="table-header-title">Customer Relationship Directory</div>
+                                <span class="customer-page-subtitle">Active corporate client
+                                    accounts & lifetime values</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('addCustomerModal')">+ Add
+                                Customer</button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Email Address</th>
+                                    <th>Phone</th>
+                                    <th>Tier</th>
+                                    <th>Lifetime Spend</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customers-table-body">
+                                <!-- Injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 3: INVENTORY ================= -->
+                <div id="view-inventory" class="tab-view">
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <div>
+                                <div class="table-header-title">Product & Stock Inventory Catalog</div>
+                                <span class="inventory-page-subtitle">Real-time stock balance &
+                                    depletion alerts</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('addProductModal')">+ Add SKU /
+                                Item</button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Item Title</th>
+                                    <th>Category</th>
+                                    <th>Unit Price</th>
+                                    <th>Stock Quantity</th>
+                                    <th>Health Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventory-table-body">
+                                <!-- Injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 4: INVOICES ================= -->
+                <div id="view-invoices" class="tab-view">
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <div>
+                                <div class="table-header-title">Invoicing & Accounts Receivable</div>
+                                <span class="invoice-page-subtitle">ReportLab PDF generation and
+                                    automated receipts</span>
+                            </div>
+                            <button class="btn btn-primary" onclick="openModal('createInvoiceModal')">+ Create
+                                Invoice</button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Invoice ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Issue Date</th>
+                                    <th>Amount</th>
+                                    <th>Payment Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoices-table-body">
+                                <!-- Injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 5: EXPENSES ================= -->
+                <div id="view-expenses" class="tab-view">
+                    <div class="table-container">
+                        <div class="table-header-bar">
+                            <div>
+                                <div class="table-header-title">Operational Expenditure Ledger</div>
+                                <span class="expense-page-subtitle">Tagged business expenses &
+                                    anomaly flags</span>
+                            </div>
+                            <div class="expense-header-actions">
+                                <label class="archive-toggle">
+                                    <input type="checkbox" id="showArchivedExpenses" onchange="toggleArchivedExpenses(this.checked)">
+                                    Show archived
+                                </label>
+                                <button class="btn btn-primary" onclick="openModal('logExpenseModal')">+ Log Outflow</button>
+                            </div>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Vendor</th>
+                                    <th>Anomaly Engine</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expenses-table-body">
+                                <!-- Injected via JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ================= VIEW 6: SMARTBIZ COPILOT ================= -->
+                <div id="view-ai-copilot" class="tab-view">
+                    <div class="view-intro copilot-intro">
+                        <div class="view-intro-copy">
+                            <span class="view-eyebrow">SMARTBIZ AI</span>
+                            <h1>SmartBiz Copilot</h1>
+                            <p>Your business assistant for ledger questions and document research.</p>
+                        </div>
+                        <div class="view-intro-mark" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" focusable="false">
+                                <path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"></path>
+                                <path d="m19 3 .8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8L19 3Z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="ai-workspace">
+                        <!-- Left Prompt Library -->
+                        <div class="prompt-sidebar">
+                            <div class="prompt-library">
+                                <h4>Suggested questions</h4>
+                                <p class="prompt-sidebar-description">
+                                    Choose a prompt or ask your own question:
+                                </p>
+                                <button class="prompt-chip"
+                                    onclick="askAICopilot('Which product generated the highest profit this month?')">
+                                    <span class="prompt-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="M4 19V5m0 14h16"></path>
+                                            <path d="m7 15 4-4 3 2 5-6"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="prompt-text">Which product generated the highest profit?</span>
+                                </button>
+                                <button class="prompt-chip"
+                                    onclick="askAICopilot('Summarize our unpaid invoices and recommend follow-ups.')">
+                                    <span class="prompt-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20V3.5Z"></path>
+                                            <path d="M14 3.8v4h4M9 12h6M9 15.5h6"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="prompt-text">Summarize unpaid invoices</span>
+                                </button>
+                                <button class="prompt-chip"
+                                    onclick="askAICopilot('What does our company refund policy state in the handbook?')">
+                                    <span class="prompt-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20V3.5Z"></path>
+                                            <path d="M14 3.8v4h4M9 12h6M9 15.5h4"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="prompt-text">What does our refund policy say?</span>
+                                </button>
+                                <button class="prompt-chip"
+                                    onclick="askAICopilot('Detect any unusual expenses logged this week.')">
+                                    <span class="prompt-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="M12 3.5 21 20H3l9-16.5Z"></path>
+                                            <path d="M12 9v4.5M12 17h.01"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="prompt-text">Find unusual expenses this week</span>
+                                </button>
+                            </div>
+
+                            <section class="document-note" aria-labelledby="documentNoteTitle">
+                                <div class="document-note-heading">
+                                    <span class="document-note-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="M6 3.5h8l4 4V20a.5.5 0 0 1-.5.5h-11A.5.5 0 0 1 6 20V3.5Z"></path>
+                                            <path d="M14 3.8v4h4M9 12h6M9 15.5h6"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="document-note-title-group">
+                                        <span class="document-note-eyebrow">KNOWLEDGE BASE</span>
+                                        <strong id="documentNoteTitle">Business documents</strong>
+                                    </span>
+                                </div>
+                                <p>Place source files in <code>business_docs/</code> for document search.</p>
+                                <div class="document-note-formats" aria-label="Supported file formats">
+                                    <span>TXT</span>
+                                    <span>MD</span>
+                                    <span>PDF</span>
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- Copilot conversation -->
+                        <div class="chat-card">
+                            <div class="chat-panel-header">
+                                <div class="chat-panel-brand">
+                                    <span class="chat-brand-icon" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" focusable="false">
+                                            <path d="m12 3 2.2 6.8L21 12l-6.8 2.2L12 21l-2.2-6.8L3 12l6.8-2.2L12 3Z"></path>
+                                            <path d="m19 3 .8 2.2L22 6l-2.2.8L19 9l-.8-2.2L16 6l2.2-.8L19 3Z"></path>
+                                        </svg>
+                                    </span>
+                                    <span class="chat-brand-copy">
+                                        <strong>SmartBiz Copilot</strong>
+                                        <span>Ledger and document assistant</span>
+                                    </span>
+                                </div>
+                                <span class="chat-panel-label">BUSINESS AI</span>
+                            </div>
+                            <div class="chat-messages" id="aiChatThread">
+                                <div class="chat-bubble assistant chat-welcome">
+                                    <strong>Hello, I'm SmartBiz Copilot.</strong>
+                                    <p>Sign in to ask questions about your ledger. Document search requires an LLM key
+                                        and local business documents.</p>
+                                </div>
+                            </div>
+                            <form class="chat-input-bar" onsubmit="handleAIChatSubmit(event)">
+                                <input type="text" id="aiUserInput"
+                                    placeholder="Ask about sales, invoices, or business documents..."
+                                    autocomplete="off">
+                                <button type="submit" class="btn btn-primary">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= MODALS & OVERLAYS ================= -->
+
+    <!-- 1. CREATE TAX INVOICE MODAL -->
+    <div id="createInvoiceModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Create Tax Invoice</div>
+                <button class="modal-close-btn" onclick="closeModal('createInvoiceModal')">&times;</button>
+            </div>
+            <!-- Added id="invoiceForm" so script.js finds it -->
+            <form id="invoiceForm" onsubmit="handleCreateInvoiceSubmit(event)">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Customer / Client</label>
+                            <select id="modalInvCustomer" class="form-control" required>
+                                <!-- Populated via JS -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Issue Date</label>
+                            <input type="date" id="modalInvDate" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product / Service Item</label>
+                        <select id="modalInvProduct" class="form-control" onchange="recalculateInvoiceFormTotal()"
+                            required>
+                            <!-- Populated via JS -->
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Unit Price ($)</label>
+                            <input type="number" id="modalInvUnitPrice" class="form-control" readonly
+                                style="background:#f1f5f9;">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" id="modalInvQty" value="1" min="1" class="form-control"
+                                oninput="recalculateInvoiceFormTotal()" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estimated Total With Tax (8%)</label>
+                        <input type="text" id="modalInvCalculatedTotal" class="form-control" readonly
+                            style="background:#eef2ff; font-weight:800; color:var(--primary);">
+                    </div>
+                </div>
+                <!-- Corrected footer buttons for creating the invoice -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('createInvoiceModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Generate Invoice</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. REPORTLAB AUTOMATED PDF ENGINE PREVIEW MODAL -->
+    <div id="pdfPreviewModal" class="modal-backdrop">
+        <div class="modal-box modal-lg">
+            <div class="modal-header">
+                <div class="modal-title">ReportLab Automated PDF Engine Preview</div>
+                <button class="modal-close-btn" onclick="closeModal('pdfPreviewModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="reportlab-sheet">
+                    <div class="sheet-header">
+                        <div class="sheet-brand">
+                            <h2>SmartBiz<span style="color:#6366f1;">.AI</span></h2>
+                            <p>Enterprise Operations Ledger Inc.<br>Silicon Park Blvd, Suite 400<br>VAT ID: US-8839210-X
+                            </p>
+                        </div>
+                        <div class="sheet-meta">
+                            <h3>INVOICE</h3>
+                            <p id="pdfPreviewNumber"
+                                style="font-weight:bold; color:var(--primary); font-size:1.1rem; margin-top:2px;">
+                                INV-2026-001</p>
+                            <p id="pdfPreviewDate" style="color:var(--text-muted); font-size:0.75rem;">Date: 2026-10-14
+                            </p>
+                            <div id="pdfPreviewStatusBadge" style="margin-top:4px;"></div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-details">
+                        <div>
+                            <h5>Billed To</h5>
+                            <p id="pdfPreviewClientName" style="font-weight:700; font-size:0.95rem;">Acme Global Corp
+                            </p>
+                            <p id="pdfPreviewClientEmail" style="color:var(--text-muted); font-size:0.75rem;">
+                                billing@acmeglobal.com</p>
+                        </div>
+                        <div style="text-align:right;">
+                            <h5>Payment Method</h5>
+                            <p style="font-weight:600;">FastAPI Stripe Automated ACH</p>
+                            <p style="color:var(--text-muted); font-size:0.75rem;">Ref: TXN_REPORTLAB_SECURE</p>
+                        </div>
+                    </div>
+
+                    <table class="sheet-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th style="text-align:center;">Qty</th>
+                                <th style="text-align:right;">Unit Price</th>
+                                <th style="text-align:right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pdfPreviewTableBody">
+                            <!-- Dynamically populated -->
+                        </tbody>
+                    </table>
+
+                    <div class="sheet-totals">
+                        <div>Subtotal: <strong id="pdfPreviewSubtotal">$0.00</strong></div>
+                        <div>Estimated Tax (8%): <strong id="pdfPreviewTax">$0.00</strong></div>
+                        <div class="line-total">Total Due: <span id="pdfPreviewGrandTotal">$0.00</span></div>
+                    </div>
+
+                    <div
+                        style="margin-top:1.5rem; padding-top:1rem; border-top:1px dashed var(--border-color); text-align:center; font-size:0.7rem; color:var(--text-muted);">
+                        Rendered automatically via Python ReportLab + FastAPI Backend Engine.
+                    </div>
+                </div>
+            </div>
+            <!-- AFTER -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    onclick="openBackendPdf(document.getElementById('pdfPreviewNumber').textContent)">🖨️ Print /
+                    Download PDF</button>
+                <button type="button" class="btn btn-primary" onclick="closeModal('pdfPreviewModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ADD CUSTOMER MODAL -->
+    <div id="addCustomerModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Add New Customer Account</div>
+                <button class="modal-close-btn" onclick="closeModal('addCustomerModal')">&times;</button>
+            </div>
+            <form onsubmit="handleAddCustomerSubmit(event)">
+                <div class="modal-body">
+                    <div id="customerFormMessage" class="form-feedback" role="alert" aria-live="polite" hidden></div>
+                    <div class="form-group">
+                        <label for="custNameInput">Company / Client Name <span aria-hidden="true">*</span></label>
+                        <input type="text" id="custNameInput" class="form-control"
+                            placeholder="e.g. Acme Tech Solutions" autocomplete="organization"
+                            aria-describedby="custNameHint custNameError" required
+                            oninput="clearCustomerFieldError('custNameInput')">
+                        <small id="custNameHint" class="field-hint">Enter a company or client name, not an email or phone number.</small>
+                        <small id="custNameError" class="field-error" aria-live="polite"></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="custEmailInput">Contact Email <span aria-hidden="true">*</span></label>
+                        <input type="email" id="custEmailInput" class="form-control" placeholder="finance@company.com"
+                            autocomplete="email" aria-describedby="custEmailHint custEmailError" required
+                            oninput="clearCustomerFieldError('custEmailInput')">
+                        <small id="custEmailHint" class="field-hint">Enter an email address like name@company.com.</small>
+                        <small id="custEmailError" class="field-error" aria-live="polite"></small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="custPhoneInput">Phone Number <span aria-hidden="true">*</span></label>
+                            <input type="text" id="custPhoneInput" class="form-control" placeholder="+1 555-0199"
+                                inputmode="tel" autocomplete="tel" aria-describedby="custPhoneHint custPhoneError" required
+                                oninput="clearCustomerFieldError('custPhoneInput')">
+                            <small id="custPhoneHint" class="field-hint">Enter 7-15 digits; +, spaces, parentheses, dots, and hyphens are allowed.</small>
+                            <small id="custPhoneError" class="field-error" aria-live="polite"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="custTierInput">Customer Tier <span aria-hidden="true">*</span></label>
+                            <select id="custTierInput" class="form-control" aria-describedby="custTierError"
+                                onchange="clearCustomerFieldError('custTierInput')">
+                                <option value="Enterprise">Enterprise</option>
+                                <option value="Growth">Growth</option>
+                                <option value="Standard">Standard</option>
+                            </select>
+                            <small id="custTierError" class="field-error" aria-live="polite"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('addCustomerModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Customer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. ADD PRODUCT / SKU MODAL -->
+    <div id="addProductModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Add SKU / Inventory Item</div>
+                <button class="modal-close-btn" onclick="closeModal('addProductModal')">&times;</button>
+            </div>
+            <form onsubmit="handleAddProductSubmit(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Product Title</label>
+                        <input type="text" id="prodNameInput" class="form-control"
+                            placeholder="e.g. Ultra HD Monitor Stand" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="prodCategoryInput" class="form-control">
+                                <option value="Hardware">Hardware</option>
+                                <option value="Peripherals">Peripherals</option>
+                                <option value="Services">Services</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity</label>
+                            <input type="number" id="prodStockInput" class="form-control" value="25" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Low Stock Threshold</label>
+                            <input type="number" id="prodMinStockInput" class="form-control" value="5" min="0" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Price ($)</label>
+                        <input type="number" id="prodPriceInput" class="form-control" step="0.01" placeholder="149.99"
+                            required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('addProductModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save to Inventory</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 5. LOG EXPENSE MODAL -->
+    <div id="logExpenseModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">Log Business Outflow / Expense</div>
+                <button class="modal-close-btn" onclick="closeModal('logExpenseModal')">&times;</button>
+            </div>
+            <form onsubmit="handleLogExpenseSubmit(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Expense Date</label>
+                        <input type="date" id="expDateInput" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Expense Description</label>
+                        <input type="text" id="expDescInput" class="form-control"
+                            placeholder="e.g. AWS Production Cluster Hosting" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="expCategoryInput" class="form-control">
+                                <option value="SaaS & Cloud">SaaS & Cloud</option>
+                                <option value="Office & Facilities">Office & Facilities</option>
+                                <option value="Marketing">Marketing</option>
+                                <option value="Operations">Operations</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount ($)</label>
+                            <input type="number" id="expAmountInput" step="0.01" class="form-control"
+                                placeholder="320.00" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Vendor / Payee</label>
+                        <input type="text" id="expVendorInput" class="form-control" placeholder="Amazon Web Services"
+                            required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="closeModal('logExpenseModal')">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Record Expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="customerAuditModal" class="modal-backdrop">
+        <div class="modal-box modal-lg">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Customer Audit Log</div>
+                    <div id="customerAuditCustomerName" class="audit-log-customer"></div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('customerAuditModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="customerAuditStatus" class="audit-log-status" role="status" aria-live="polite"></p>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>When</th>
+                                <th>Action</th>
+                                <th>By</th>
+                                <th>Fields Changed</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerAuditTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="closeModal('customerAuditModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="settingsModal" class="modal-backdrop">
+        <section class="modal-box settings-modal" role="dialog" aria-modal="true"
+            aria-labelledby="settingsModalTitle">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title" id="settingsModalTitle">SmartBiz settings</div>
+                    <p class="settings-intro">Personalize how the workspace looks and moves.</p>
+                </div>
+                <button type="button" class="modal-close-btn" aria-label="Close settings"
+                    onclick="closeSettingsModal()">&times;</button>
+            </div>
+            <div class="modal-body settings-body">
+                <div class="settings-option">
+                    <div>
+                        <label for="layoutDensitySetting">Layout density</label>
+                        <p>Choose the amount of space used across cards and tables.</p>
+                    </div>
+                    <select id="layoutDensitySetting" class="form-control"
+                        onchange="updateAppSetting('layoutDensity', this.value)">
+                        <option value="comfortable">Comfortable</option>
+                        <option value="compact">Compact</option>
+                    </select>
+                </div>
+                <label class="settings-option settings-toggle-option" for="reduceMotionSetting">
+                    <span>
+                        <span class="settings-option-title">Reduce motion</span>
+                        <span class="settings-option-description">Limit interface transitions and animations.</span>
+                    </span>
+                    <input type="checkbox" id="reduceMotionSetting"
+                        onchange="updateAppSetting('reduceMotion', this.checked)">
+                </label>
+                <p id="settingsStatus" class="settings-status" role="status" aria-live="polite">
+                    Preferences are saved in this browser.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="closeSettingsModal()">Done</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-pill">
+        <span id="toastText">Action completed successfully.</span>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal-backdrop">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>🔑 SmartBiz Admin Sign In</h3>
+                <button class="modal-close-btn" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="loginUsername" class="form-control" required
+                            autocomplete="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" class="form-control" required
+                            autocomplete="current-password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('loginModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>
